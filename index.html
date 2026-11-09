@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notas Back1 Nutresa</title>
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1d1d1b;--mute:#6b6b66;--line:#e3e2dc;--accent:#2f5d8a;--ok:#2e7d4f;--mid:#b07a12;--bad:#b3392f;--chip:#eef2f6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--card:#1f1f1d;--ink:#ecebe6;--mute:#a09f98;--line:#33332f;--accent:#7fb0e0;--ok:#6cc391;--mid:#e0b04d;--bad:#ef7d72;--chip:#2a2f36}}
+:root[data-theme="dark"]{--bg:#161615;--card:#1f1f1d;--ink:#ecebe6;--mute:#a09f98;--line:#33332f;--accent:#7fb0e0;--ok:#6cc391;--mid:#e0b04d;--bad:#ef7d72;--chip:#2a2f36}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+h1{font-size:1.6rem;margin:0 0 4px}
+h2{font-size:1.15rem;margin:32px 0 10px}
+.sub{color:var(--mute);margin:0 0 18px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+.stat b{display:block;font-size:1.5rem}
+.stat span{color:var(--mute);font-size:.85rem}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+input,select,button{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+button{cursor:pointer}
+.tbl{width:100%;overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;color:var(--mute);cursor:pointer;user-select:none;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+tr.row{cursor:pointer}
+tr.row:hover{background:var(--chip)}
+.n{font-weight:700;font-variant-numeric:tabular-nums}
+.g5{color:var(--ok)}.g4{color:var(--accent)}.g3{color:var(--mid)}.g2{color:var(--bad)}
+.chip{display:inline-block;background:var(--chip);border-radius:20px;padding:1px 8px;font-size:.8rem;color:var(--mute)}
+tr.det td{background:var(--bg);padding:14px}
+.fb{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+.box h4{margin:0 0 6px;font-size:.95rem}
+.pos{border-left:3px solid var(--ok);padding-left:8px;margin:6px 0}
+.mej{border-left:3px solid var(--mid);padding-left:8px;margin:6px 0}
+.pos::before{content:"✔ Lo positivo: ";font-weight:600;color:var(--ok)}
+.mej::before{content:"↗ Puede mejorar: ";font-weight:600;color:var(--mid)}
+.why{background:var(--chip);border-radius:8px;padding:8px 10px;margin:4px 0 8px;font-size:.9rem}
+.why p{margin:6px 0 0}
+.calc{font-variant-numeric:tabular-nums}
+.bar{display:flex;height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:6px}
+.bm{background:var(--accent)}.bi{background:var(--ok)}.ba{background:var(--mid)}
+.gen{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:14px}
+.gen p{margin:0 0 8px}
+.legend{display:flex;flex-wrap:wrap;gap:6px}
+.cat{display:inline-block;border-radius:20px;padding:1px 9px;font-size:.78rem;font-weight:600;white-space:nowrap}
+.c-sob{background:#2e7d4f22;color:var(--ok)}
+.c-exc{background:#6a4bc422;color:#7b5cd6}
+.c-sup{background:#2f5d8a22;color:var(--accent)}
+.c-pro{background:var(--chip);color:var(--mute)}
+.c-rev{background:#b3392f22;color:var(--bad)}
+.perfil{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.perfil h4{margin:0 0 6px;font-size:.95rem;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.perfil p{margin:0}
+.warn{color:var(--bad);font-size:.85rem;margin-top:6px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;color:var(--mute);font-size:.9rem}
+.note li{margin:3px 0}
+@media (max-width:700px){.fb{grid-template-columns:1fr}}
+@media print{.tools,button{display:none}tr.det{display:table-row!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Calificaciones Back1 · Nutresa</h1>
+<p class="sub">Actividad 1: <b>proyecto integrador</b>, modelo + interfaz de servicio en <b>sazon_back_beta</b> (individual) · Actividad 2: parcial práctico POO "El Brunch POO" en <b>examenfinalpoonutresa</b> (equipos). Escala 1.0 – 5.0. Orden alfabético por apellido. Haz clic en un estudiante para ver la retroalimentación.</p>
+
+<div class="stats" id="stats"></div>
+
+<div class="gen">
+<p><b>Valoración general del grupo.</b> El grupo ha mostrado una actitud proactiva y una curva de aprendizaje positiva a lo largo del semestre. La mayoría pasó de crear clases vacías a construir modelos completos con encapsulamiento, constructores y contratos de servicio, y empezó a trabajar con ramas y pull requests. Los aspectos por fortalecer son, sobre todo, compilar antes de entregar y respetar las convenciones de Java.</p>
+<div class="legend">
+<span class="cat c-sob">Sobresaliente</span><span class="cat c-exc">Caso excepcional</span><span class="cat c-sup">Superación</span><span class="cat c-pro">Proactivo, en progreso</span><span class="cat c-rev">En revisión</span>
+</div>
+</div>
+
+<div class="tools">
+<input id="q" type="search" placeholder="Buscar estudiante o usuario…" aria-label="Buscar">
+<button id="exp">Expandir todo</button>
+<button id="col">Contraer todo</button>
+<button onclick="window.print()">Imprimir</button>
+</div>
+
+<div class="tbl">
+<table>
+<thead><tr>
+<th data-k="i">#</th><th data-k="ap">Apellidos, nombre</th><th data-k="gh">Usuario GitHub</th>
+<th data-k="s">Proyecto integrador</th><th data-k="e">Parcial (equipo)</th><th data-k="eq">Equipo / PR</th>
+</tr></thead>
+<tbody id="tb"></tbody>
+</table>
+</div>
+
+<section hidden>
+<h2>Parcial por equipo (rúbrica de 100 pts)</h2>
+<div class="tbl"><table>
+<thead><tr><th>PR</th><th>Integrantes</th><th>Sintaxis /30</th><th>Lógica /40</th><th>Revisión /15</th><th>Evidencias /10</th><th>Commits /5</th><th>Total</th><th>Nota</th></tr></thead>
+<tbody id="tt"></tbody></table></div>
+</section>
+
+<h2>Cómo se calificó</h2>
+<div class="note"><ul>
+<li><b>Proyecto integrador (sazon_back_beta):</b> nota = modelo (hasta 2.5) + interfaz (hasta 2.5) ± ajustes. Modelo (atributos según la tabla, privados, <code>package</code>, constructor vacío y lleno, getters/setters, <code>toString</code>, nombre en PascalCase singular); interfaz (crear, buscarPorId, listarTodos, actualizar, eliminar y listarPor&lt;FK&gt;, tipos e imports correctos, que compile, nombre <code>I&lt;Entidad&gt;Servicio</code>). Se revisó el estado final de los PR de cada estudiante.</li>
+<li><b>Parcial:</b> rúbrica del README (15 errores de sintaxis × 2, 10 de lógica × 4, 5 hallazgos × 3, EVIDENCIAS 10, commits 5). Nota = puntos ÷ 20.</li>
+<li><b>Revisión estática:</b> el código de los estudiantes no se ejecutó; se leyó el código final de cada PR contra la clave de errores. Conviene correr <code>javac</code> + <code>java -cp out Main</code> en los PR 5, 9 y 10 para confirmar las fallas descritas.</li>
+<li><b>Por verificar:</b> el nombre de pila de Urrego Escobar (usuario <code>mp-r01</code>, firma "maria paz") y de Cárdenas Obando ("Julián", por la rama del PR 4) se dedujo. Los PR de Maiky Vergara (#59) y Brayner Flórez (#60) tienen commits de otras cuentas (joselo2356E, nanygomez0507-debug). El PR 12 declara que usó una skill de Claude "con autorización del profesor", y las EVIDENCIAS de los PR 4, 6, 7 y 10 describen cambios que no están en el código.</li>
+</ul></div>
+</div>
+
+<script>
+const T={
+1:{m:"Valencia Martínez, Valencia Estrada, Padilla Valencia",p:[30,40,15,10,5],n:5.0,
+ pos:"Corrigieron los 15 errores de sintaxis, los 10 de lógica y los 5 hallazgos. El refactor quedó limpio: getEstacion() abstracto, constantes, calcularSubtotalConDescuento(), copia defensiva del menú y sePuedeVender(). Hicieron commits por fase y las evidencias están completas.",
+ mej:"No hacía falta reescribir el README del docente: las evidencias van solo en EVIDENCIAS.md."},
+2:{m:"Correa Builes, Botero",p:[30,40,14,10,5],n:5.0,
+ pos:"El trabajo está prácticamente perfecto. R1 quedó bien resuelto con obtenerEstacion() polimórfico, las constantes tienen nombres claros y las evidencias están completas, con la salida correcta.",
+ mej:"R3 quedó parcial: calcularPrecio() sigue repitiendo subtotal − descuento, deberían usar calcularBaseGravable(). En EVIDENCIAS solo aparecen 2 integrantes."},
+3:{m:"Hincapié Usuga, Pérez Higuita, Zambrano Colón",p:[30,40,15,7,4],n:4.8,
+ pos:"Las fases 1, 2 y 3 están completas y correctas, con un refactor limpio (getEstacion, constantes, método base, copia del menú).",
+ mej:"EVIDENCIAS quedó dentro de src/, sin título de equipo ni nombres completos, y la sección 5 de POO está vacía. La fase 3 y las evidencias se subieron en un solo commit."},
+4:{m:"Gómez Aguilar, Cárdenas Obando, Samudio Urán",p:[28,40,1,3,2],n:3.7,
+ pos:"Corrigieron bien los 10 errores de lógica y la salida coincide con la tabla.",
+ mej:"Cambiaron Mesa a String y los datos de Main en lugar de corregir \"1\" → 1, lo que va contra la intención del código y contra la regla de no tocar los datos de prueba. La fase 3 no se hizo (solo simplificaron v). EVIDENCIAS lista errores que no corresponden al código real y le faltan nombres. Solo hay 2 commits."},
+5:{m:"Acevedo Yepes, Isaza Vásquez",p:[30,36,0,7,4],n:3.9,
+ pos:"La sintaxis está completa, corrigieron 9 de 10 errores de lógica y el análisis de la fase 3 en EVIDENCIAS está bien planteado.",
+ mej:"En calcularImpoconsumo() faltan paréntesis: debe ser (subtotal − descuento) × 0.08. Su propia salida mostraba un impoconsumo de $183.024 y no la compararon con la tabla. La fase 3 quedó solo planeada (\"se definirá\") y no está en el código."},
+6:{m:"Ciro Naranjo, Ocampo Vargas, Misas",p:[30,40,0,5,4],n:4.0,
+ pos:"Corrigieron la sintaxis y la lógica en el código (stock, setDisponible, descuento, impoconsumo, propina, vegetariano, búsqueda y cierre).",
+ mej:"La fase 3 no aparece en el código aunque EVIDENCIAS la describe (y con hallazgos distintos a R1–R5). La salida pegada no coincide con la tabla. Faltan los nombres completos del equipo."},
+7:{m:"Cruz Osorio, Tique Marín",p:[30,40,0,5,5],n:4.0,
+ pos:"Corrigieron la sintaxis y la lógica, hicieron buenos commits por fase y la explicación de POO es clara.",
+ mej:"EVIDENCIAS describe R1–R5 como hechos, pero el código sigue con instanceof, números mágicos y el método v. La salida pegada tiene propinas que no cuadran con los totales."},
+8:{m:"David Piedrahita, Graciano Valderrama, Rivera Acosta",p:[30,40,0,6,5],n:4.1,
+ pos:"Corrigieron la sintaxis y la lógica, con commits pequeños y muy descriptivos, uno por error.",
+ mej:"R1 quedó mal: obtenerEstacion() devuelve getCategoria(), así que la comanda dice \"Plato fuerte\" en vez de \"Cocina\" y la salida cambió. R2–R5 no se hicieron y la sección 3 de EVIDENCIAS repite errores de lógica. Configuren bien git user.name."},
+9:{m:"Ortega Pertuz, Reinoso Bonilla",p:[30,32,1,3,3],n:3.5,
+ pos:"La sintaxis está completa y empezaron bien R1: agregaron getEstacion() en las clases hijas.",
+ mej:"La propina quedó invertida (cobra cuando el cliente no la acepta) y esVegetariano() retorna false después del primer producto. LineaPedido sigue usando instanceof. EVIDENCIAS está incompleto: las secciones 3, 4 y 5 están vacías."},
+10:{m:"Vergara, Flórez Palacios",p:[30,24,1,4,4],n:3.2,
+ pos:"La sintaxis está completa y la explicación de los conceptos de POO es buena.",
+ mej:"calcularDescuento() se llama a sí mismo, lo que produce un StackOverflowError en la sección 5. La propina todavía incluye el impoconsumo, esVegetariano() no se corrigió y la fase 3 no se hizo. La salida en EVIDENCIAS no corresponde a una ejecución real, y borraron Javadoc de las interfaces."},
+11:{m:"Vélez Hurtado, Chaves Rivero, Ávila Rodríguez",p:[30,40,3,4,3],n:4.0,
+ pos:"Corrigieron 10 de 10 errores de lógica y resolvieron R1 correctamente con obtenerEstacion() abstracto en ProductoMenu.",
+ mej:"R2–R5 quedaron pendientes. En EVIDENCIAS, las secciones 3, 4 y 5 están vacías. Faltaron el commit de evidencias y nombres de commit por fase."},
+12:{m:"Loaiza García, Urrego Escobar, Lombana Osorio",p:[30,40,9,9,5],n:4.7,
+ pos:"Todo funciona. R1, R2 y R3 quedaron muy bien, los commits van por fase y las evidencias son muy completas y transparentes.",
+ mej:"Faltó R4 (copia defensiva de getMenu) y R5 (renombrar y simplificar v). Escriban los nombres completos de los integrantes."}
+};
+const S=[
+["Acevedo Yepes","Daniel","DanielZen911",4.3,5,"Modelo Marcas completo, con package, constructores, getters/setters y toString.","La interfaz IMarcaServicio no importa el modelo, el nombre de la clase va en singular (Marca) y el método listarPor debe empezar en minúscula."],
+["Ávila Rodríguez","Jorge Andrés","Jorge-Andres-Avila-Rodriguez",3.0,11,"Modelo Favorito completo, con todos los atributos de la tabla y toString.","La interfaz se llama IComentarioServicio pero es de Favorito, actualizar() retorna Categoria y tiene un import java.util.list duplicado que no compila. Al modelo le falta package."],
+["Botero","José Manuel","dexter-mouser",3.8,2,"Modelo Alergeno completo y la interfaz tiene los 6 métodos CRUD + FK.","Hay errores de ortografía en nombres (Alerjeno, nivelRiego, IAlejenoValicacion). La interfaz es de servicio pero se llama Validación, no importa el modelo y usa tipos primitivos (long) en vez de Long."],
+["Cárdenas Obando","Julián","OBANDO019",3.0,4,"Modelo Cupón con getters/setters y toString, y la interfaz tiene los 6 métodos.","Los atributos están public (deben ser private), la línea package está duplicada (no compila) y falta el constructor lleno. La interfaz no tiene imports y su nombre debe ser ICuponServicio. El PR #41 tocó muchos archivos ajenos."],
+["Chaves Rivero","Jorge Alexander","JorgeChavesRivero",2.5,11,"Modelo Campaña completo, con 7 atributos, constructores, getters/setters y toString.","La interfaz ICampañaServicio está vacía. La clase se llama Campañas dentro de Campaña.java (no compila). Eviten la ñ en nombres de clases y archivos."],
+["Ciro Naranjo","Verónica","lileblu",3.8,6,"Modelo con todos los atributos y la interfaz con los 6 métodos correctos.","La clase modelo se llama SugerenciaServicio (debe ser Sugerencia). En el último PR crearon una clase Sugerencia vacía y pusieron la interfaz en models/ en lugar de services/. Faltan imports."],
+["Correa Builes","José David","wurst-jpg",4.7,2,"Modelo PerfilAlimentario completo con package y una interfaz correcta que importa el modelo. También aportaron RestriccionPerfil.","La interfaz debe llevar el prefijo I (IPerfilAlimentarioServicio). Trabajen en una rama feature y no en develop, y eviten tildes en los identificadores (caloríasDiarias)."],
+["Cruz Osorio","Cristian Camilo","cristiancamilocruzosorio5-maker",3.0,7,"Al final crearon el modelo IngredienteReceta con atributos, constructores y getters/setters.","El primer modelo (campaña en recetario) no era el suyo. La interfaz no tiene imports, usa list en minúscula y mezcla long/Long. Quedó un archivo IIngredienteRecetaServicio incompleto en models/ que no compila. Falta toString."],
+["David Piedrahita","Andrés Felipe","AndresDavid575",3.0,8,"Modelo de cuentas de fidelización con todos los atributos, getters/setters y un toString con StringBuilder.","La interfaz no compila: Lista en vez de List, tipos en minúscula e import de modelo.CuentaFidelización, que no existe. Al modelo le falta package, hay un error de escritura (fechaAfiliciación) y el nombre debería ser singular y en PascalCase."],
+["Flórez Palacios","Brayner","braynerflorez0-commits",2.5,10,"Se entregó un modelo Colecciones con constructores, getters/setters y toString.","Los commits del PR #60 son de otra cuenta (nanygomez0507-debug) y la entidad repite la de otro compañero. No hay interfaz de servicio. Deben entregar su propio modelo e interfaz desde su cuenta."],
+["Gómez Aguilar","Miguel","mg5539891-source",2.5,4,"Estructura de modelo con constructores, getters/setters y toString, y la interfaz con package y los 6 métodos.","Los atributos de FotoReceta son los de ListaMercado (nombre, presupuesto, idPlanSemanal) y no los de la tabla. La clase fotoReceta no coincide con el archivo Fotoreceta.java y hay un foto.java duplicado. La interfaz usa una clase FotoReceta vacía."],
+["Graciano Valderrama","Marlon","marlon-graciano02",3.3,8,"Modelo CategoriaReceta completo, con constructores, getters/setters y toString.","La interfaz no compila: import java.util.list y \"modelo,CategoríaReceta\" con coma. Además, la clase usa tilde y no coincide con Categoriareceta. Al modelo le falta package."],
+["Hincapié Usuga","Felipe","programadorH",3.3,3,"Modelo Valoración con constructores, getters/setters y toString, y la interfaz con los 6 métodos.","Falta el atributo id en el modelo y el package usa una carpeta con tilde. La interfaz mezcla Valoración/Valoracion (no compila) y su nombre tiene un error (IValoracionServivio)."],
+["Isaza Vásquez","Juan Felipe","isazavasquez9",3.3,5,"Modelo Colecciones con todos los atributos, constructores, getters/setters y toString.","La interfaz usa Coleccion pero la clase es Colecciones, listarPorIdUsuario retorna List<Categoria> (copiado de otro ejemplo), ListarTodos empieza en mayúscula y mezcla long/Long. Al modelo le falta package y hay un error de escritura (fechaCreracion)."],
+["Loaiza García","Luis","Loaiza27",3.5,12,"Modelo ComidaPlanificada completo con package y una interfaz con los 6 métodos y la FK correcta.","La interfaz tiene errores de escritura que no compilan (ComdidaPlanificada, ComidaPlanifica) y no importa el modelo. El PR #56 arrastró muchos archivos de recetario."],
+["Lombana Osorio","—","clombanaosorio",4.5,12,"Modelo AlertaVencimiento completo y bien tipado, con package, y una interfaz correcta con la FK idItemDespensa.","Agregar package e import del modelo a la interfaz."],
+["Misas","Deerly","DeerlyM05",4.5,6,"Modelo HistorialConsumo completo (en el segundo PR agregó los getters/setters) y una interfaz de validación bien planteada que importa el modelo.","La FK debe llamarse idItemDespensa, la interfaz debe empezar con IHistorial… (mayúscula) y conviene evitar tildes en los nombres de métodos."],
+["Ocampo Vargas","Santiago","santiagoocampovargas-collab",3.5,6,"Modelo Producto completo, con 7 atributos, package, constructores, getters/setters y toString.","La interfaz no compila: java.util.list, Lond, listartodos y listaePorIdMarca. Revisen la ortografía y compilen antes del PR."],
+["Ortega Pertuz","Katherin","Katpertuz",4.4,9,"Modelo ImagenProducto completo y bien renombrado en el segundo PR, con una interfaz correcta y su FK.","Corregir textoAletarnativo, usar Long en lugar de long y agregar package e import del modelo a la interfaz."],
+["Padilla Valencia","Santiago","Santiago95X",3.0,1,"Interfaz de servicio y de validación muy bien hechas: package, Javadoc y la FK correcta.","No entregó la clase modelo ObjetivoNutricional que la interfaz importa (además, el import usa modelo/modelos de forma inconsistente). Deben entregar el modelo."],
+["Pérez Higuita","Hernán Darío","Amahlo",4.8,3,"Modelo Despensa completo con package y una interfaz correcta que importa el modelo. Es un trabajo limpio.","Agregar package a la interfaz y sacar el modelo de la subcarpeta personal (hernan/)."],
+["Reinoso Bonilla","Deily","reinosodeily",4.4,9,"Modelo Receta completo dentro del proyecto Spring, con package, y una interfaz correcta.","Evitar tildes en los identificadores (título, idCategoríaReceta) y agregar imports a la interfaz."],
+["Rivera Acosta","José Javier","josejavierriveraacosta-crypto",3.0,8,"Modelo Recompensa con todos los atributos, constructores y getters/setters.","La interfaz no compila: recompensa y list en minúscula y sin imports. Al modelo le faltan package y toString. Configuren git user.name/email (quedó \"git config --global…\")."],
+["Samudio Urán","Miguel","Msamudiouran",4.8,4,"Modelo ListaMercado completo con package y una interfaz de validación con package e import. Es un trabajo muy ordenado.","Evitar tildes en nombres de archivo y método (IListaMercadoValidación) y mantener la estructura de carpetas acordada por el equipo."],
+["Tique Marín","Carlos Duván","duvs-marin",3.0,7,"Modelo Presentación con package, constructores y getters/setters.","El atributo String LongIdProducto debe ser Long idProducto, hay un error de escritura (decripcion) y falta toString. La interfaz tiene actulizar, la FK equivocada (idUsuarioCreador) y no tiene imports. Configurar git user.name (aparece unknown)."],
+["Urrego Escobar","María Paz (por confirmar)","mp-r01",3.0,12,"Modelo Categoría con todos los atributos, constructores, getters/setters y toString.","La clase está en minúscula (categoria) y sin package. La interfaz está en models/, usa list y categoria en minúscula y mezcla long/Long (no compila)."],
+["Valencia Estrada","Juan Camilo","j-cvalencia",4.7,1,"Modelo InformacionNutricional completo y bien tipado, con package, y una interfaz correcta que importa el modelo.","Agregar package a la interfaz y evitar tildes en el nombre del archivo (IInformaciónNutricionalServicio)."],
+["Valencia Martínez","José David","josedava2005-wq",2.0,1,"Modelo con constructores y getters/setters bien estructurados.","Los atributos (calorías, proteínas…) no corresponden a la tabla restricciones_perfil, falta toString y no entregó la interfaz de servicio."],
+["Vélez Hurtado","Andrés","andresvel-dot",4.0,11,"Modelo PlanSemanal completo con package y una interfaz con los 6 métodos y la FK correcta.","La interfaz no tiene imports (List y el modelo) y usa PlanSemanal mientras la clase es Plan_Semanal. Los commits del modelo salen con otra cuenta (alejandrotrujill00620-pixel)."],
+["Vergara","Maiky Santiago","maikyvergara-ios",2.5,10,"Se entregó un modelo ItemDespensa con constructores y getters/setters.","Los commits del PR #59 son de otra cuenta (joselo2356E) y no hay interfaz de servicio. Falta package y toString."],
+["Zambrano Colón","Diógenes","diogeneszc",4.9,3,"Es el mejor trabajo del grupo: modelo PasoReceta dentro del proyecto Spring, una clase MainPrueba que lo prueba y una interfaz con package e import correctos.","El primer PR subió .vscode y archivos generados del proyecto: usen .gitignore."]
+];
+// Por qué de la nota del proyecto integrador: [modelo /2.5, interfaz /2.5, ajuste, explicación]
+const W={
+"DanielZen911":[2.5,1.8,0,"Modelo completo (2.5): tiene package, los 7 atributos de la tabla, constructores, getters/setters y toString. Interfaz (1.8): tiene los 6 métodos, pero no importa el modelo y el método ListarPor… empieza en mayúscula."],
+"Jorge-Andres-Avila-Rodriguez":[2.0,1.0,0,"Modelo (2.0): tiene todos los atributos, constructores, getters/setters y toString, pero le falta package. Interfaz (1.0): no compila por el import java.util.list duplicado y porque actualizar() retorna Categoria, y el nombre IComentarioServicio no corresponde a Favorito."],
+"dexter-mouser":[2.1,1.7,0,"Modelo (2.1): está completo, pero tiene errores de escritura en los nombres (Alerjeno, nivelRiego) y usa primitivos en vez de Long/Boolean. Interfaz (1.7): tiene los 6 métodos CRUD + FK, pero se llama Validación siendo de servicio y no importa el modelo."],
+"OBANDO019":[1.6,1.4,0,"Modelo (1.6): los atributos son public, la línea package está duplicada (no compila) y falta el constructor lleno. Interfaz (1.4): tiene los 6 métodos, pero no tiene imports y su nombre (Icuponservicios) no sigue la convención."],
+"JorgeChavesRivero":[2.0,0.5,0,"Modelo (2.0): tiene los 7 atributos, constructores, getters/setters y toString, pero la clase Campañas no coincide con el archivo Campaña.java y no compila. Interfaz (0.5): se creó el archivo, pero está vacío, sin ningún método."],
+"lileblu":[2.0,1.8,0,"Modelo (2.0): tiene todos los atributos, getters/setters y toString, pero la clase se llama SugerenciaServicio en vez de Sugerencia. Interfaz (1.8): los 6 métodos están bien, pero quedó en models/ y sin imports."],
+"wurst-jpg":[2.5,2.2,0,"Modelo completo (2.5), con package, atributos, constructores, getters/setters y toString. Interfaz (2.2): está correcta e importa el modelo; solo le falta el prefijo I en el nombre."],
+"cristiancamilocruzosorio5-maker":[1.7,1.3,0,"Modelo (1.7): el primero no era su entidad. Corrigió con IngredienteReceta, que tiene atributos y getters/setters pero no toString. Interfaz (1.3): no tiene imports, usa list en minúscula, mezcla long/Long y dejó un archivo incompleto en models/ que no compila."],
+"AndresDavid575":[2.0,1.0,0,"Modelo (2.0): tiene los atributos, getters/setters y toString, pero no package, y el nombre está en plural con un error de escritura en un atributo. Interfaz (1.0): no compila porque usa Lista en vez de List, tipos en minúscula y un import de una clase que no existe."],
+"braynerflorez0-commits":[2.0,0,0.5,"Modelo (2.0): Colecciones está completo, pero repite la entidad de otro compañero y los commits son de otra cuenta. Interfaz (0.0): no se entregó. Ajuste del docente (+0.5)."],
+"mg5539891-source":[1.2,1.3,0,"Modelo (1.2): los atributos son los de ListaMercado y no los de foto_receta, la clase no coincide con el archivo y hay un archivo duplicado. Interfaz (1.3): la estructura y el package están bien, pero usa una clase FotoReceta vacía y mezcla long/Long."],
+"marlon-graciano02":[2.2,1.1,0,"Modelo (2.2): tiene todos los atributos, constructores, getters/setters y toString, pero no package. Interfaz (1.1): no compila por java.util.list y por la coma en el import, y el nombre con tilde no coincide con la clase."],
+"programadorH":[1.8,1.5,0,"Modelo (1.8): le falta el atributo id y el package usa una carpeta con tilde, aunque tiene constructores, getters/setters y toString. Interfaz (1.5): tiene los 6 métodos, pero no compila porque mezcla Valoración/Valoracion, y hay un error en el nombre (Servivio)."],
+"isazavasquez9":[2.0,1.3,0,"Modelo (2.0): está completo, pero sin package y con un error de escritura (fechaCreracion). Interfaz (1.3): el tipo Coleccion no coincide con Colecciones, un método retorna List<Categoria> y mezcla long/Long."],
+"Loaiza27":[2.4,1.1,0,"Modelo (2.4): está completo, con package, constructores, getters/setters y toString. Interfaz (1.1): tiene los métodos y la FK correcta, pero errores de escritura (ComdidaPlanificada, ComidaPlanifica) impiden que compile y no hay imports."],
+"clombanaosorio":[2.5,2.0,0,"Modelo completo (2.5), con package, tipos correctos, constructores, getters/setters y toString. Interfaz (2.0): los 6 métodos y la FK son correctos; solo faltan package e import del modelo."],
+"DeerlyM05":[2.3,2.2,0,"Modelo (2.3): quedó completo en el segundo PR; la FK debería llamarse idItemDespensa. Interfaz (2.2): la validación está bien planteada e importa el modelo; el nombre debe empezar con IH y conviene quitar tildes."],
+"santiagoocampovargas-collab":[2.4,1.1,0,"Modelo (2.4): tiene los 7 atributos, constructores, getters/setters y toString, pero el package es personal. Interfaz (1.1): no compila por java.util.list, Lond, listartodos y listaePorIdMarca."],
+"Katpertuz":[2.3,2.1,0,"Modelo (2.3): está completo y bien renombrado; tiene un error de escritura (textoAletarnativo) y usa long primitivo. Interfaz (2.1): está correcta y con la FK, pero sin package ni import del modelo."],
+"Santiago95X":[0,2.5,0.5,"Modelo (0.0): no entregó la clase ObjetivoNutricional que la interfaz importa. Interfaz (2.5): está completa, con package y Javadoc. Extra (+0.5) por entregar además la interfaz de validación."],
+"Amahlo":[2.4,2.4,0,"Modelo (2.4): está completo y con package; le resta estar en la subcarpeta personal hernan/. Interfaz (2.4): está correcta e importa el modelo; solo falta package."],
+"reinosodeily":[2.3,2.1,0,"Modelo (2.3): está completo, con package y dentro del proyecto Spring, pero usa tildes en los identificadores. Interfaz (2.1): es correcta y tiene la FK, pero no tiene imports."],
+"josejavierriveraacosta-crypto":[1.9,1.1,0,"Modelo (1.9): tiene todos los atributos, constructores y getters/setters, pero no package ni toString. Interfaz (1.1): no compila por recompensa y list en minúscula y porque no hay imports."],
+"Msamudiouran":[2.5,2.3,0,"Modelo completo (2.5), con package, tipos correctos, constructores, getters/setters y toString. Interfaz (2.3): la validación está muy bien hecha, con package e import; solo le resta usar tildes en los nombres."],
+"duvs-marin":[1.6,1.4,0,"Modelo (1.6): el atributo String LongIdProducto está mal declarado, hay un error de escritura (decripcion) y falta toString. Interfaz (1.4): tiene un error de escritura (actulizar), la FK es la equivocada y no hay imports."],
+"mp-r01":[1.9,1.1,0,"Modelo (1.9): tiene todos los atributos y toString, pero la clase está en minúscula y no tiene package. Interfaz (1.1): está en la carpeta equivocada y no compila por list/categoria en minúscula y por mezclar long/Long."],
+"j-cvalencia":[2.5,2.2,0,"Modelo completo (2.5), con package y tipos correctos. Interfaz (2.2): está correcta e importa el modelo; solo falta package y quitar la tilde del nombre."],
+"josedava2005-wq":[2.0,0,0,"Modelo (2.0): la estructura está completa (constructores, getters/setters), pero los atributos no son los de restricciones_perfil y falta toString. Interfaz (0.0): no se entregó."],
+"andresvel-dot":[2.5,1.5,0,"Modelo completo (2.5), con package, constructores, getters/setters y toString. Interfaz (1.5): tiene los 6 métodos y la FK correcta, pero no tiene imports y el tipo PlanSemanal no coincide con Plan_Semanal."],
+"maikyvergara-ios":[2.0,0,0.5,"Modelo (2.0): ItemDespensa tiene atributos, constructores y getters/setters, pero no package ni toString, y los commits son de otra cuenta. Interfaz (0.0): no se entregó. Ajuste del docente (+0.5)."],
+"diogeneszc":[2.5,2.4,0,"Modelo completo (2.5), dentro del proyecto Spring y con una clase MainPrueba que lo prueba. Interfaz (2.4): tiene package, import y los 6 métodos; solo le resta haber subido .vscode y archivos generados."]
+};
+const CAT={sob:["c-sob","Sobresaliente"],exc:["c-exc","Caso excepcional"],sup:["c-sup","Superación"],pro:["c-pro","Proactivo, en progreso"],rev:["c-rev","En revisión"]};
+function badge(r){const c=CAT[(D[r.gh]||["pro"])[0]];return `<span class="cat ${c[0]}">${c[1]}</span>`}
+const D={
+"DanielZen911":["pro","Daniel ha participado con constancia en el proyecto integrador. Su modelo Marcas es de los más ordenados del grupo, lo que muestra que entiende bien cómo se estructura una entidad. El siguiente paso es cuidar los detalles de integración, como los imports y las convenciones de nombres, que separan un código correcto de uno listo para producción."],
+"Jorge-Andres-Avila-Rodriguez":["pro","Jorge Andrés participa activamente y ha avanzado en el diseño de clases modelo: su entidad Favorito tiene todo lo que se pedía. Su reto ahora es escribir los contratos de servicio con más precisión. Compilar antes de cada pull request le ayudaría a que la nota refleje el esfuerzo que invierte."],
+"dexter-mouser":["sob","José Manuel es uno de los casos sobresalientes del curso. Su equipo obtuvo la nota máxima en el parcial con un refactor que aplicó polimorfismo y constantes con buen criterio. En el proyecto integrador entregó modelo e interfaz completos; lo que falta corregir son nombres, no conceptos. Tiene el nivel para apoyar a sus compañeros en los temas de programación orientada a objetos."],
+"OBANDO019":["pro","Julián ha participado de forma proactiva y su avance se nota desde los primeros commits. Donde más puede mejorar es en el encapsulamiento: declarar los atributos como privados y comprobar que cada archivo compile antes de subirlo. Fortalecer ese hábito tendría un efecto directo en la calidad de sus entregas."],
+"JorgeChavesRivero":["pro","Jorge Alexander ha sido constante en sus entregas y su modelo Campaña está bien construido, con todos los atributos y métodos de acceso. Le queda pendiente completar la interfaz de servicio, que se entregó vacía. Con ese paso, su trabajo quedaría al nivel que ya mostró en el modelo."],
+"lileblu":["pro","Verónica ha avanzado bien en el manejo de entidades y en el uso de Git con ramas por historia de usuario. Su principal oportunidad está en la organización del proyecto: nombrar cada clase según su tabla y ubicar cada archivo en la capa que le corresponde (modelo o servicio). Eso le dará mayor claridad a su código."],
+"wurst-jpg":["sob","José David Correa es uno de los casos sobresalientes del grupo. Además de su propia entidad, aportó un segundo modelo al módulo de nutrición y lideró la entrega del parcial, que obtuvo la nota máxima con evidencias completas. Su código es limpio y consistente. Para seguir creciendo, se le recomienda trabajar siempre en ramas feature en lugar de hacerlo directamente sobre develop."],
+"cristiancamilocruzosorio5-maker":["pro","Cristian Camilo supo corregir el rumbo: después de un primer modelo que no correspondía a su entidad, entregó IngredienteReceta con una estructura adecuada, y ese ajuste muestra aprendizaje. Ahora debe afianzar la sintaxis de Java, como las mayúsculas en los tipos y la declaración de imports, para que sus interfaces compilen."],
+"AndresDavid575":["pro","Andrés Felipe trabaja con iniciativa, y su modelo incluye buenas prácticas poco comunes en el grupo, como un toString construido con StringBuilder. Su mayor oportunidad de crecimiento está en la precisión de la sintaxis de las interfaces. Revisar tipos, imports y nombres antes de cada entrega le permitirá mostrar todo lo que sabe."],
+"braynerflorez0-commits":["rev","Brayner está en seguimiento. A pesar de los compromisos acordados, sigue desconectado del proceso y con poca motivación: no entregó la interfaz de servicio y los commits del modelo vienen de otra cuenta. Continuamos con el acompañamiento individual para que retome la entrega autónoma de su trabajo."],
+"mg5539891-source":["pro","Miguel Gómez ha sido proactivo organizando a su equipo para el parcial y abriendo los pull requests. En el proyecto integrador debe revisar que los atributos del modelo correspondan a su tabla (foto_receta), porque la entrega actual usa los campos de otra entidad. Afinar esa revisión le permitirá aprovechar mejor su iniciativa."],
+"marlon-graciano02":["pro","Marlon ha avanzado de forma sostenida: pasó de una clase vacía a un modelo completo de CategoríaReceta. En su siguiente etapa debe prestar más atención a los detalles de compilación en las interfaces, donde hoy un import mal escrito le resta puntos."],
+"programadorH":["sup","Felipe es un caso destacado de superación. Su progreso durante el semestre ha sido notable y se vio en el parcial, donde su equipo resolvió las tres fases con un refactor de buen nivel. En el proyecto integrador todavía debe agregar el atributo id al modelo y usar el mismo nombre de la entidad en la interfaz, pero su trayectoria muestra que tiene las herramientas para lograrlo."],
+"isazavasquez9":["pro","Juan Felipe ha sido constante en sus entregas y redactó muy bien las evidencias del parcial. Su oportunidad de mejora está en la coherencia entre capas: el tipo que usa la interfaz debe coincidir exactamente con la clase del modelo. Cuidar ese detalle hará que su trabajo esté mejor integrado."],
+"Loaiza27":["pro","Luis ha sido un integrante proactivo, tanto en el proyecto integrador como en el parcial, donde su equipo entregó uno de los trabajos más completos y mejor documentados. En su interfaz quedan errores de escritura que impiden compilar; al corregirlos, su entrega quedaría al mismo nivel que su modelo."],
+"clombanaosorio":["pro","El modelo AlertaVencimiento es sólido y está bien tipado, y su equipo del parcial presentó evidencias de alta calidad. Su curva de aprendizaje ha sido estable y positiva. Para completar una entrega de nivel profesional, solo le falta agregar package e imports a la interfaz."],
+"DeerlyM05":["pro","Deerly ha mejorado de forma visible entre una entrega y otra: completó los getters y setters en un segundo pull request y planteó una interfaz de validación bien pensada. Se le recomienda mantener esa costumbre de revisar y mejorar su propio código, y repasar las convenciones de nombres."],
+"santiagoocampovargas-collab":["pro","Santiago Ocampo entregó uno de los modelos más completos del módulo de catálogo y participa activamente en clase. Su interfaz, en cambio, tiene varios errores de escritura. El hábito que más le ayudaría es compilar siempre antes de abrir un pull request."],
+"Katpertuz":["pro","Katherin ha mostrado capacidad para corregir su propio trabajo: renombró su modelo a ImagenProducto siguiendo la convención, lo que demuestra que entiende el estándar. Su interfaz funciona correctamente; solo le falta ajustar los imports y usar tipos envolventes (Long en lugar de long)."],
+"Santiago95X":["exc","Santiago Padilla es un caso excepcional. Después de varios compromisos y conversaciones individuales, asumió su proceso, entregó y mejoró notablemente: sus interfaces de servicio y de validación están bien estructuradas y documentadas con Javadoc, y su equipo obtuvo la nota máxima en el parcial. Todavía falta la clase modelo ObjetivoNutricional. Se valora especialmente su cambio de actitud y se le anima a mantenerlo."],
+"Amahlo":["pro","Hernán Darío entrega un trabajo limpio y profesional, coherente con su formación previa en desarrollo de software. Su modelo y su interfaz están prácticamente completos, y su equipo resolvió el parcial con un refactor de calidad. Puede aportar mucho al grupo compartiendo sus buenas prácticas."],
+"reinosodeily":["sup","Deily es un caso de superación y mejoría. Su evolución es clara: pasó de una clase Receta vacía a un modelo completo dentro del proyecto Spring, con una interfaz correcta, y ese avance refleja un esfuerzo sostenido. En el parcial, su mayor reto fue la lógica de negocio (propina y pedido vegetariano), un tema que se le recomienda seguir practicando."],
+"josejavierriveraacosta-crypto":["pro","José Javier mostró en el parcial una forma de trabajar muy ordenada: commits pequeños y descriptivos, uno por cada corrección. En el proyecto integrador debe aplicar esa misma disciplina a la sintaxis de la interfaz y configurar bien su nombre y correo en Git."],
+"Msamudiouran":["pro","Miguel Samudio entregó un trabajo ordenado y bien estructurado: su modelo ListaMercado y su interfaz de validación están entre los mejores del módulo de planificador. Su curva de aprendizaje es muy positiva. Se le sugiere evitar las tildes en los nombres de clases y métodos para que el código funcione igual en cualquier equipo."],
+"duvs-marin":["pro","Carlos Duván participa con regularidad, y su equipo del parcial corrigió bien la sintaxis y la lógica. En el proyecto integrador debe revisar cómo declara los atributos (el tipo y el nombre van separados) y usar la clave foránea correcta de su entidad."],
+"mp-r01":["pro","Su participación en el equipo del parcial aportó a una de las entregas más completas del curso. En el proyecto integrador, el modelo Categoría tiene los atributos correctos; debe ajustar las convenciones de Java, como las clases en PascalCase y los tipos con mayúscula, para que la interfaz compile."],
+"j-cvalencia":["pro","Juan Camilo presenta un trabajo consistente y de buena calidad en ambas actividades: su modelo de información nutricional está completo y su equipo obtuvo la nota máxima en el parcial. Muestra madurez técnica; le queda cuidar detalles menores, como el package de la interfaz."],
+"josedava2005-wq":["pro","José David Valencia fue clave en el parcial: su equipo obtuvo 5.0 con commits por fase y evidencias completas. En el proyecto integrador, en cambio, la entrega quedó incompleta: los atributos no corresponden a su tabla y falta la interfaz. Se le invita a llevar al proyecto el mismo nivel que demostró en el parcial."],
+"andresvel-dot":["pro","Andrés ha participado activamente y su modelo Plan_Semanal está completo y bien organizado. Para afianzar lo aprendido, debe revisar que los nombres coincidan entre el modelo y la interfaz y declarar todos los imports necesarios."],
+"maikyvergara-ios":["rev","Maiky está en seguimiento. A pesar de los compromisos establecidos, sigue desconectado del proceso y con poca motivación: no hay interfaz de servicio y el modelo se subió desde otra cuenta. Continuamos con el acompañamiento para que retome sus entregas de forma autónoma."],
+"diogeneszc":["sob","Diógenes es uno de los casos sobresalientes del curso. Fue más allá de lo que se pedía: integró su modelo en el proyecto Spring y creó una clase de prueba para verificarlo, y su equipo resolvió el parcial con un refactor completo. Su trabajo es una referencia para el grupo."]
+};
+function why(r){const w=W[r.gh];if(!w)return"";const aj=w[2]?` + ajuste ${w[2].toFixed(1)}`:"";
+ return `<div class="why"><div class="calc">Modelo <b>${w[0].toFixed(1)}</b>/2.5 + Interfaz <b>${w[1].toFixed(1)}</b>/2.5${aj} = <b>${f(r.s)}</b></div><div class="bar"><span style="width:${w[0]/5*100}%" class="bm"></span><span style="width:${w[1]/5*100}%" class="bi"></span><span style="width:${w[2]/5*100}%" class="ba"></span></div><p><b>Por qué esta nota:</b> ${w[3]}</p></div>`}
+const cls=n=>n>=4.5?"g5":n>=4?"g4":n>=3?"g3":"g2";
+const f=n=>n.toFixed(1);
+let rows=S.map((r,i)=>({i:i+1,ap:r[0],no:r[1],gh:r[2],s:r[3],eq:r[4],e:T[r[4]].n,sp:r[5],sm:r[6]}));
+let sortK="ap",asc=true,open=new Set();
+const tb=document.getElementById("tb");
+function render(){
+ const q=document.getElementById("q").value.toLowerCase();
+ const list=rows.filter(r=>(r.ap+" "+r.no+" "+r.gh).toLowerCase().includes(q))
+  .sort((a,b)=>{const x=a[sortK],y=b[sortK];return (typeof x==="number"?x-y:x.localeCompare(y,"es"))*(asc?1:-1)});
+ tb.innerHTML=list.map((r,k)=>{const t=T[r.eq];return `<tr class="row" data-gh="${r.gh}"><td>${k+1}</td><td><b>${r.ap}</b>, ${r.no} ${badge(r)}</td><td><span class="chip">${r.gh}</span></td><td class="n ${cls(r.s)}">${f(r.s)}</td><td class="n ${cls(r.e)}">${f(r.e)}</td><td>PR #${r.eq}</td></tr>`+
+ `<tr class="det" ${open.has(r.gh)?"":"hidden"}><td colspan="6"><div class="perfil"><h4>Valoración del docente ${badge(r)}</h4><p>${(D[r.gh]||["pro",""])[1]}</p></div><div class="fb">
+ <div class="box"><h4>Proyecto integrador · <span class="${cls(r.s)}">${f(r.s)}</span></h4>${why(r)}<div class="pos">${r.sp}</div><div class="mej">${r.sm}</div></div>
+ <div class="box"><h4>Parcial en equipo (PR #${r.eq}) · <span class="${cls(r.e)}">${f(r.e)}</span></h4><div class="chip">${t.m}</div><div class="pos">${t.pos}</div><div class="mej">${t.mej}</div></div>
+ </div></td></tr>`}).join("");
+}
+tb.addEventListener("click",e=>{const tr=e.target.closest("tr.row");if(!tr)return;const g=tr.dataset.gh;open.has(g)?open.delete(g):open.add(g);render()});
+document.querySelectorAll("th[data-k]").forEach(th=>th.onclick=()=>{const k=th.dataset.k==="i"?"ap":th.dataset.k;asc=sortK===k?!asc:true;sortK=k;render()});
+document.getElementById("q").oninput=render;
+document.getElementById("exp").onclick=()=>{rows.forEach(r=>open.add(r.gh));render()};
+document.getElementById("col").onclick=()=>{open.clear();render()};
+const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
+const ss=rows.map(r=>r.s),ee=rows.map(r=>r.e);
+document.getElementById("stats").innerHTML=[
+ [rows.length,"estudiantes"],[f(avg(ss)),"promedio proyecto integrador"],[f(avg(ee)),"promedio parcial"],
+ [ss.filter(x=>x<3).length+" / "+ee.filter(x=>x<3).length,"por debajo de 3.0 (proyecto / parcial)"]
+].map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("");
+document.getElementById("tt").innerHTML=Object.entries(T).map(([k,t])=>{const tot=t.p.reduce((a,b)=>a+b,0);return `<tr><td>#${k}</td><td>${t.m}</td>${t.p.map(x=>`<td class="n">${x}</td>`).join("")}<td class="n">${tot}</td><td class="n ${cls(t.n)}">${f(t.n)}</td></tr>`}).join("");
+render();
+</script>
+</body>
+</html>
